@@ -4,7 +4,7 @@ include "root" {
 }
 
 terraform {
-  source = "git::https://github.com/rgadzhiev/terraform-modules.git//yc-folder?ref=main"
+  source = "git::https://github.com/itruslan/terraform-modules.git//yc-folder?ref=main"
 }
 
 inputs = {

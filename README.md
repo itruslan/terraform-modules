@@ -15,7 +15,7 @@ Modules are referenced via Terragrunt:
 
 ```hcl
 terraform {
-  source = "git::https://github.com/rgadzhiev/terraform-modules.git//mikrotik-auth?ref=v1.0.0"
+  source = "git::https://github.com/itruslan/terraform-modules.git//mikrotik-auth?ref=v1.0.0"
 }
 ```
 
