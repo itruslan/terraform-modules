@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "terraform": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["terraform"],
+      "automerge": false
+    }
+  ]
+}
