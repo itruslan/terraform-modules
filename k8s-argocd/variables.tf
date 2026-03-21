@@ -26,3 +26,23 @@ variable "values" {
   type        = list(string)
   default     = []
 }
+
+variable "root_app" {
+  description = "Root Application pointing to bootstrap/ in gitops repo"
+  type = object({
+    repo_url        = string
+    bootstrap_path  = optional(string, "bootstrap")
+    target_revision = optional(string, "HEAD")
+    project         = optional(string, "default")
+  })
+  default = null
+}
+
+variable "app_projects" {
+  description = "List of ArgoCD AppProjects to create"
+  type = list(object({
+    name        = string
+    description = optional(string, "")
+  }))
+  default = []
+}

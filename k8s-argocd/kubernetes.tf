@@ -19,6 +19,68 @@ resource "helm_release" "argocd" {
   wait       = true
 }
 
+resource "kubernetes_manifest" "root_app" {
+  count = var.root_app != null ? 1 : 0
+
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "Application"
+    metadata = {
+      name      = "bootstrap"
+      namespace = kubernetes_namespace.argocd.metadata[0].name
+    }
+    spec = {
+      project = var.root_app.project
+      source = {
+        repoURL        = var.root_app.repo_url
+        targetRevision = var.root_app.target_revision
+        path           = var.root_app.bootstrap_path
+      }
+      destination = {
+        server    = "https://kubernetes.default.svc"
+        namespace = kubernetes_namespace.argocd.metadata[0].name
+      }
+      syncPolicy = {
+        automated = {
+          prune    = true
+          selfHeal = true
+        }
+        syncOptions = ["CreateNamespace=true"]
+      }
+    }
+  }
+
+  depends_on = [helm_release.argocd]
+}
+
+resource "kubernetes_manifest" "app_project" {
+  for_each = { for p in var.app_projects : p.name => p }
+
+  manifest = {
+    apiVersion = "argoproj.io/v1alpha1"
+    kind       = "AppProject"
+    metadata = {
+      name      = each.value.name
+      namespace = kubernetes_namespace.argocd.metadata[0].name
+    }
+    spec = {
+      description = each.value.description
+      sourceRepos = ["*"]
+      destinations = [
+        {
+          server    = "https://kubernetes.default.svc"
+          namespace = "*"
+        }
+      ]
+      clusterResourceWhitelist = [
+        { group = "*", kind = "*" }
+      ]
+    }
+  }
+
+  depends_on = [helm_release.argocd]
+}
+
 data "kubernetes_secret" "initial_admin" {
   metadata {
     name      = "argocd-initial-admin-secret"
