@@ -13,9 +13,6 @@ export YC_CLOUD_ID=your_cloud_id
 
 See [terragrunt.example.hcl](./terragrunt.example.hcl) for a full example.
 
-> **Bootstrap note:** This module provisions foundational infrastructure.
-> Use local backend until your S3 state bucket exists.
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

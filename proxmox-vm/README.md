@@ -6,7 +6,7 @@ Terraform module for creating Proxmox VMs (supports multiple VMs per call).
 
 ```bash
 export PROXMOX_VE_ENDPOINT=https://pve-1.home.lab:8006
-export PROXMOX_VE_API_TOKEN=root@pam!terraform=<token>
+export PROXMOX_VE_API_TOKEN=terraform@pve!terraform=<token>
 ```
 
 ## Usage
