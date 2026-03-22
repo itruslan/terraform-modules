@@ -45,12 +45,14 @@ No modules.
 | Name | Type |
 |------|------|
 | [authentik_flow_stage_binding.admin_assignment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/flow_stage_binding) | resource |
+| [authentik_flow_stage_binding.enrollment_write](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/flow_stage_binding) | resource |
 | [authentik_flow_stage_binding.identification](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/flow_stage_binding) | resource |
 | [authentik_policy_binding.github_admin_assignment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/policy_binding) | resource |
 | [authentik_policy_expression.github_admin_assignment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/policy_expression) | resource |
 | [authentik_source_oauth.github](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/source_oauth) | resource |
 | [authentik_stage_dummy.admin_assignment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/stage_dummy) | resource |
 | [authentik_stage_identification.this](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/stage_identification) | resource |
+| [authentik_stage_user_write.enrollment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/stage_user_write) | resource |
 | [authentik_flow.authentication](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/data-sources/flow) | data source |
 | [authentik_flow.enrollment](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/data-sources/flow) | data source |
 | [authentik_flow.login](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/data-sources/flow) | data source |

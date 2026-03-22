@@ -9,12 +9,6 @@ locals {
 
 terraform {
   source = "git::https://github.com/itruslan/terraform-modules.git//authentik-github-source?ref=main"
-
-  after_hook "patch_default_stages" {
-    commands     = ["apply"]
-    execute      = ["${get_original_terragrunt_dir()}/patch-default-stages.sh"]
-    run_on_error = false
-  }
 }
 
 inputs = {

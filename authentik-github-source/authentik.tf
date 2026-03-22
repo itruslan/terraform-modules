@@ -23,6 +23,19 @@ data "authentik_flow" "enrollment" {
   slug = var.enrollment_flow_slug
 }
 
+# User write stage — creates enrolled users as internal (not external)
+resource "authentik_stage_user_write" "enrollment" {
+  name                     = "github-enrollment-write"
+  user_type                = "internal"
+  create_users_as_inactive = false
+}
+
+resource "authentik_flow_stage_binding" "enrollment_write" {
+  target = data.authentik_flow.enrollment.id
+  stage  = authentik_stage_user_write.enrollment.id
+  order  = 1
+}
+
 # GitHub OAuth source
 resource "authentik_source_oauth" "github" {
   name                = "GitHub"
