@@ -77,7 +77,7 @@ resource "kubernetes_manifest" "app_project" {
   }
 
   lifecycle {
-    ignore_changes = [manifest]
+    ignore_changes = [object]
   }
 
   depends_on = [helm_release.argocd]
