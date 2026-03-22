@@ -49,7 +49,7 @@ No modules.
 | <a name="input_client_secret"></a> [client\_secret](#input\_client\_secret) | OIDC client secret | `string` | n/a | yes |
 | <a name="input_groups_claim"></a> [groups\_claim](#input\_groups\_claim) | JWT claim to use for group membership | `string` | `"groups"` | no |
 | <a name="input_issuer_url"></a> [issuer\_url](#input\_issuer\_url) | OIDC discovery URL | `string` | n/a | yes |
-| <a name="input_scopes"></a> [scopes](#input\_scopes) | OIDC scopes to request | `list(string)` | <pre>[<br/>  "openid",<br/>  "profile",<br/>  "email",<br/>  "groups"<br/>]</pre> | no |
+| <a name="input_scopes"></a> [scopes](#input\_scopes) | OIDC scopes to request | `list(string)` | <pre>[<br>  "openid",<br>  "profile",<br>  "email",<br>  "groups"<br>]</pre> | no |
 | <a name="input_token_max_ttl"></a> [token\_max\_ttl](#input\_token\_max\_ttl) | Max TTL for OIDC tokens (seconds) | `number` | `86400` | no |
 | <a name="input_token_ttl"></a> [token\_ttl](#input\_token\_ttl) | Default TTL for OIDC tokens (seconds) | `number` | `3600` | no |
 | <a name="input_user_claim"></a> [user\_claim](#input\_user\_claim) | JWT claim to use as the user identity | `string` | `"preferred_username"` | no |
