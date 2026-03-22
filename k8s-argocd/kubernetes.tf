@@ -68,16 +68,12 @@ resource "kubernetes_manifest" "app_project" {
       sourceRepos = ["*"]
       destinations = concat(
         [{ server = "https://kubernetes.default.svc", namespace = "*" }],
-        each.value.extra_destinations
+        [for d in each.value.extra_destinations : { for k, v in d : k => v if v != null }]
       )
       clusterResourceWhitelist = [
         { group = "*", kind = "*" }
       ]
     }
-  }
-
-  lifecycle {
-    ignore_changes = [object]
   }
 
   depends_on = [helm_release.argocd]
