@@ -3,6 +3,10 @@ resource "proxmox_virtual_environment_group" "this" {
 
   group_id = each.key
   comment  = each.value.comment
+
+  lifecycle {
+    ignore_changes = [acl]
+  }
 }
 
 resource "proxmox_virtual_environment_acl" "this" {
