@@ -66,12 +66,10 @@ resource "kubernetes_manifest" "app_project" {
     spec = {
       description = each.value.description
       sourceRepos = ["*"]
-      destinations = [
-        {
-          server    = "https://kubernetes.default.svc"
-          namespace = "*"
-        }
-      ]
+      destinations = concat(
+        [{ server = "https://kubernetes.default.svc", namespace = "*" }],
+        each.value.extra_destinations
+      )
       clusterResourceWhitelist = [
         { group = "*", kind = "*" }
       ]

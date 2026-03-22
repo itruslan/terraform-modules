@@ -43,6 +43,11 @@ variable "app_projects" {
   type = list(object({
     name        = string
     description = optional(string, "")
+    extra_destinations = optional(list(object({
+      name      = optional(string)
+      server    = optional(string)
+      namespace = optional(string, "*")
+    })), [])
   }))
   default = []
 }
