@@ -12,7 +12,7 @@ terraform {
 
   after_hook "patch_default_stages" {
     commands     = ["apply"]
-    execute      = ["${get_terragrunt_dir()}/patch-default-stages.sh"]
+    execute      = ["${get_original_terragrunt_dir()}/patch-default-stages.sh"]
     run_on_error = false
   }
 }
