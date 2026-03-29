@@ -30,10 +30,11 @@ variable "values" {
 variable "root_app" {
   description = "Root Application pointing to bootstrap/ in gitops repo"
   type = object({
-    repo_url        = string
-    bootstrap_path  = optional(string, "bootstrap")
-    target_revision = optional(string, "HEAD")
-    project         = optional(string, "default")
+    repo_url          = string
+    bootstrap_path    = optional(string, "bootstrap")
+    target_revision   = optional(string, "HEAD")
+    project           = optional(string, "default")
+    directory_recurse = optional(bool, false)
   })
   default = null
 }

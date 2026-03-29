@@ -31,11 +31,14 @@ resource "kubernetes_manifest" "root_app" {
     }
     spec = {
       project = var.root_app.project
-      source = {
-        repoURL        = var.root_app.repo_url
-        targetRevision = var.root_app.target_revision
-        path           = var.root_app.bootstrap_path
-      }
+      source = merge(
+        {
+          repoURL        = var.root_app.repo_url
+          targetRevision = var.root_app.target_revision
+          path           = var.root_app.bootstrap_path
+        },
+        var.root_app.directory_recurse ? { directory = { recurse = true } } : {}
+      )
       destination = {
         server    = "https://kubernetes.default.svc"
         namespace = kubernetes_namespace.argocd.metadata[0].name

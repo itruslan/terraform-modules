@@ -41,7 +41,7 @@ No modules.
 | <a name="input_kubeconfig_context"></a> [kubeconfig\_context](#input\_kubeconfig\_context) | Kubeconfig context to use | `string` | `null` | no |
 | <a name="input_kubeconfig_path"></a> [kubeconfig\_path](#input\_kubeconfig\_path) | Path to kubeconfig file | `string` | `"~/.kube/config"` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ArgoCD namespace | `string` | `"argocd"` | no |
-| <a name="input_root_app"></a> [root\_app](#input\_root\_app) | Root Application pointing to bootstrap/ in gitops repo | <pre>object({<br/>    repo_url        = string<br/>    bootstrap_path  = optional(string, "bootstrap")<br/>    target_revision = optional(string, "HEAD")<br/>    project         = optional(string, "default")<br/>  })</pre> | `null` | no |
+| <a name="input_root_app"></a> [root\_app](#input\_root\_app) | Root Application pointing to bootstrap/ in gitops repo | <pre>object({<br/>    repo_url          = string<br/>    bootstrap_path    = optional(string, "bootstrap")<br/>    target_revision   = optional(string, "HEAD")<br/>    project           = optional(string, "default")<br/>    directory_recurse = optional(bool, false)<br/>  })</pre> | `null` | no |
 | <a name="input_values"></a> [values](#input\_values) | Helm chart values (list of YAML strings) | `list(string)` | `[]` | no |
 
 ## Outputs
