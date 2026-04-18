@@ -1,0 +1,51 @@
+# rundeck-yc-scheduler
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
+| <a name="requirement_rundeck"></a> [rundeck](#requirement\_rundeck) | ~> 1.1 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_rundeck"></a> [rundeck](#provider\_rundeck) | 1.2.1 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [rundeck_acl_policy.project_storage](https://registry.terraform.io/providers/rundeck/rundeck/latest/docs/resources/acl_policy) | resource |
+| [rundeck_job.this](https://registry.terraform.io/providers/rundeck/rundeck/latest/docs/resources/job) | resource |
+| [rundeck_password.yc_sa_key](https://registry.terraform.io/providers/rundeck/rundeck/latest/docs/resources/password) | resource |
+| [rundeck_project.this](https://registry.terraform.io/providers/rundeck/rundeck/latest/docs/resources/project) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_command_ordering_strategy"></a> [command\_ordering\_strategy](#input\_command\_ordering\_strategy) | Execution strategy: node-first (all steps on one node, then next) or step-first | `string` | `"node-first"` | no |
+| <a name="input_continue_next_node_on_error"></a> [continue\_next\_node\_on\_error](#input\_continue\_next\_node\_on\_error) | Continue processing remaining nodes if one node fails | `bool` | `true` | no |
+| <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Job log level: DEBUG, VERBOSE, INFO, WARN, ERROR | `string` | `"INFO"` | no |
+| <a name="input_max_thread_count"></a> [max\_thread\_count](#input\_max\_thread\_count) | Maximum number of nodes processed in parallel per job | `number` | `10` | no |
+| <a name="input_node_filter_exclude_query"></a> [node\_filter\_exclude\_query](#input\_node\_filter\_exclude\_query) | Node filter expression to exclude nodes from all jobs (e.g., "labels:no\_autoshutdown: true") | `string` | `""` | no |
+| <a name="input_nodes_selected_by_default"></a> [nodes\_selected\_by\_default](#input\_nodes\_selected\_by\_default) | Whether all matched nodes are selected by default when running a job manually | `bool` | `true` | no |
+| <a name="input_projects"></a> [projects](#input\_projects) | List of Rundeck projects (one per YC folder) | <pre>list(object({<br/>    name           = string<br/>    display_name   = optional(string)<br/>    folder_id      = string<br/>    yc_sa_key      = optional(string)<br/>    stop_schedule  = optional(string)<br/>    start_schedule = optional(string)<br/>    time_zone      = optional(string, "Europe/Moscow")<br/>    resource_types = optional(map(object({<br/>      enabled                 = optional(bool, false)<br/>      stop_schedule_override  = optional(string)<br/>      start_schedule_override = optional(string)<br/>      stop_order              = optional(number, 1)<br/>      operation_timeout       = optional(number, 300)<br/>    })), {})<br/>  }))</pre> | n/a | yes |
+| <a name="input_rank_attribute"></a> [rank\_attribute](#input\_rank\_attribute) | Node attribute used to sort execution order within a job | `string` | `"stop_order"` | no |
+| <a name="input_rank_order"></a> [rank\_order](#input\_rank\_order) | Sort direction for rank\_attribute: ascending or descending | `string` | `"ascending"` | no |
+| <a name="input_rundeck_auth_token"></a> [rundeck\_auth\_token](#input\_rundeck\_auth\_token) | Rundeck API token (User Profile → API Tokens) | `string` | n/a | yes |
+| <a name="input_rundeck_url"></a> [rundeck\_url](#input\_rundeck\_url) | Rundeck URL | `string` | `"http://localhost:4440"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_project_ui_urls"></a> [project\_ui\_urls](#output\_project\_ui\_urls) | Rundeck project UI URLs |
+<!-- END_TF_DOCS -->

@@ -1,0 +1,110 @@
+variable "rundeck_url" {
+  description = "Rundeck URL"
+  type        = string
+  default     = "http://localhost:4440"
+}
+
+variable "rundeck_auth_token" {
+  description = "Rundeck API token (User Profile → API Tokens)"
+  type        = string
+  sensitive   = true
+}
+
+# ---------------------------------------------------------------------------
+# Job defaults
+# ---------------------------------------------------------------------------
+
+variable "log_level" {
+  description = "Job log level: DEBUG, VERBOSE, INFO, WARN, ERROR"
+  type        = string
+  default     = "INFO"
+}
+
+variable "node_filter_exclude_query" {
+  description = "Node filter expression to exclude nodes from all jobs (e.g., \"labels:no_autoshutdown: true\")"
+  type        = string
+  default     = ""
+}
+
+variable "nodes_selected_by_default" {
+  description = "Whether all matched nodes are selected by default when running a job manually"
+  type        = bool
+  default     = true
+}
+
+variable "max_thread_count" {
+  description = "Maximum number of nodes processed in parallel per job"
+  type        = number
+  default     = 10
+}
+
+variable "continue_next_node_on_error" {
+  description = "Continue processing remaining nodes if one node fails"
+  type        = bool
+  default     = true
+}
+
+variable "rank_attribute" {
+  description = "Node attribute used to sort execution order within a job"
+  type        = string
+  default     = "stop_order"
+}
+
+variable "rank_order" {
+  description = "Sort direction for rank_attribute: ascending or descending"
+  type        = string
+  default     = "ascending"
+}
+
+variable "command_ordering_strategy" {
+  description = "Execution strategy: node-first (all steps on one node, then next) or step-first"
+  type        = string
+  default     = "node-first"
+}
+
+# ---------------------------------------------------------------------------
+# Projects
+# ---------------------------------------------------------------------------
+
+variable "projects" {
+  description = "List of Rundeck projects (one per YC folder)"
+  type = list(object({
+    name           = string
+    display_name   = optional(string)
+    folder_id      = string
+    yc_sa_key      = optional(string)
+    stop_schedule  = optional(string)
+    start_schedule = optional(string)
+    time_zone      = optional(string, "Europe/Moscow")
+    resource_types = optional(map(object({
+      enabled                 = optional(bool, false)
+      stop_schedule_override  = optional(string)
+      start_schedule_override = optional(string)
+      stop_order              = optional(number, 1)
+      operation_timeout       = optional(number, 300)
+    })), {})
+  }))
+
+  validation {
+    condition = alltrue([
+      for project in var.projects : alltrue([
+        for rt_name in keys(project.resource_types) :
+        contains([
+          "compute-instance",
+          "managed-postgresql",
+          "managed-kubernetes",
+          "network-load-balancer",
+          "managed-kafka",
+          "application-load-balancer",
+          "managed-redis",
+          "managed-clickhouse",
+          "managed-mysql",
+          "managed-mongodb",
+          "managed-opensearch",
+          "ydb",
+        ], rt_name)
+      ])
+    ])
+    error_message = "Unknown resource type in resource_types. Supported: compute-instance, managed-postgresql, managed-kubernetes, network-load-balancer, managed-kafka, application-load-balancer, managed-redis, managed-clickhouse, managed-mysql, managed-mongodb, managed-opensearch, ydb."
+  }
+}
