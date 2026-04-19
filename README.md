@@ -6,6 +6,7 @@ Reusable Terraform modules for homelab infrastructure.
 
 | Module | Provider | Description |
 |--------|----------|-------------|
+| [yc-cm](./yc-cm) | Yandex Cloud + Cloudflare | Yandex Certificate Manager + Cloudflare ACME DNS challenges |
 | [yc-folder](./yc-folder) | Yandex Cloud | Create a resource manager folder |
 
 ## Usage
