@@ -1,10 +1,12 @@
 variable "apps" {
-  description = "Map of OAuth2 applications to create in Authentik. Key = application slug. client_id defaults to slug. vault_secret_path — if set, writes clientSecret to Vault."
+  description = "Map of OAuth2 applications to create in Authentik. Key = application slug. client_id defaults to slug. vault_secret_path — if set, writes clientSecret to Vault. generate_cookie_secret — adds cookieSecret (32 bytes base64) to Vault payload, used by oauth2-proxy."
   type = map(object({
-    name                  = string
-    allowed_redirect_uris = list(string)
-    client_id             = optional(string)
-    vault_secret_path     = optional(string)
+    name                   = string
+    allowed_redirect_uris  = list(string)
+    client_id              = optional(string)
+    client_type            = optional(string, "confidential")
+    vault_secret_path      = optional(string)
+    generate_cookie_secret = optional(bool, false)
   }))
 }
 

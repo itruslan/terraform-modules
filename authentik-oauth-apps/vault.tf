@@ -6,9 +6,14 @@ resource "vault_kv_secret_v2" "client_secret" {
   name                = each.value.vault_secret_path
   delete_all_versions = true
 
-  data_json = jsonencode({
-    clientSecret = random_password.client_secret[each.key].result
-    clientId     = authentik_provider_oauth2.this[each.key].client_id
-    issuerUrl    = var.authentik_url != null ? "${var.authentik_url}/application/o/${each.key}/" : "/application/o/${each.key}/"
-  })
+  data_json = jsonencode(merge(
+    {
+      clientSecret = random_password.client_secret[each.key].result
+      clientId     = authentik_provider_oauth2.this[each.key].client_id
+      issuerUrl    = var.authentik_url != null ? "${var.authentik_url}/application/o/${each.key}/" : "/application/o/${each.key}/"
+    },
+    each.value.generate_cookie_secret ? {
+      cookieSecret = random_id.cookie_secret[each.key].b64_url
+    } : {},
+  ))
 }

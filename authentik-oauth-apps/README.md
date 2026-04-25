@@ -44,6 +44,7 @@ No modules.
 | [authentik_application.this](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/application) | resource |
 | [authentik_property_mapping_provider_scope.groups](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/property_mapping_provider_scope) | resource |
 | [authentik_provider_oauth2.this](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/resources/provider_oauth2) | resource |
+| [random_id.cookie_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_password.client_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [vault_kv_secret_v2.client_secret](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/kv_secret_v2) | resource |
 | [authentik_certificate_key_pair.signing](https://registry.terraform.io/providers/goauthentik/authentik/latest/docs/data-sources/certificate_key_pair) | data source |
@@ -55,7 +56,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_apps"></a> [apps](#input\_apps) | Map of OAuth2 applications to create in Authentik. Key = application slug. client\_id defaults to slug. vault\_secret\_path — if set, writes clientSecret to Vault. | <pre>map(object({<br>    name                  = string<br>    allowed_redirect_uris = list(string)<br>    client_id             = optional(string)<br>    vault_secret_path     = optional(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_apps"></a> [apps](#input\_apps) | Map of OAuth2 applications to create in Authentik. Key = application slug. client\_id defaults to slug. vault\_secret\_path — if set, writes clientSecret to Vault. generate\_cookie\_secret — adds cookieSecret (32 bytes base64) to Vault payload, used by oauth2-proxy. | <pre>map(object({<br>    name                   = string<br>    allowed_redirect_uris  = list(string)<br>    client_id              = optional(string)<br>    client_type            = optional(string, "confidential")<br>    vault_secret_path      = optional(string)<br>    generate_cookie_secret = optional(bool, false)<br>  }))</pre> | n/a | yes |
 | <a name="input_authentik_url"></a> [authentik\_url](#input\_authentik\_url) | Authentik base URL - Used to construct issuerUrl in Vault secrets. | `string` | `null` | no |
 | <a name="input_authorization_flow_slug"></a> [authorization\_flow\_slug](#input\_authorization\_flow\_slug) | Slug of the Authentik authorization flow | `string` | `"default-provider-authorization-implicit-consent"` | no |
 | <a name="input_invalidation_flow_slug"></a> [invalidation\_flow\_slug](#input\_invalidation\_flow\_slug) | Slug of the Authentik invalidation flow | `string` | `"default-provider-invalidation-flow"` | no |

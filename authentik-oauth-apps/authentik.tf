@@ -36,12 +36,21 @@ resource "random_password" "client_secret" {
   special = false
 }
 
+# Generate oauth2-proxy cookie secret (32 raw bytes) per app where requested.
+# random_id length is bytes; b64_url is base64url-encoded — exactly what oauth2-proxy wants.
+resource "random_id" "cookie_secret" {
+  for_each = { for k, v in var.apps : k => v if v.generate_cookie_secret }
+
+  byte_length = 32
+}
+
 # OAuth2/OIDC Provider per app
 resource "authentik_provider_oauth2" "this" {
   for_each = var.apps
 
   name               = each.value.name
   client_id          = coalesce(each.value.client_id, each.key)
+  client_type        = each.value.client_type
   client_secret      = random_password.client_secret[each.key].result
   authorization_flow = data.authentik_flow.authorization.id
   invalidation_flow  = data.authentik_flow.invalidation.id
